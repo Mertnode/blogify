@@ -97,7 +97,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     const passwordIsCorrect = await bcrypt.compare(password, user.password);
 
     if (passwordIsCorrect) {
-        const { _id, name, email, photo, phone, bio } = user;
+        const { _id, fullname, email, profile_img, bio } = user;
         const token = generateToken(_id);
 
         // Send HTTP-only cookie
@@ -111,10 +111,9 @@ export const loginUser = asyncHandler(async (req, res) => {
         logger.info("User Logged In: User logged in successfully");
         return res.status(200).json({
             _id,
-            name,
+            fullname,
             email,
-            photo,
-            phone,
+            profile_img,
             bio,
             token,
         });
