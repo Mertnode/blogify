@@ -138,42 +138,12 @@ server.get('/get-upload-url', (req, res) => {
     })
 })
 
-server.post('/signin', (req, res) => {
 
-    let { email, password } = req.body;
-
-    User.findOne({ "personal_info.email" : email })
-    .then((user) => {
-        
-        if(!user.google_auth){
-
-            bcrypt.compare(password, user.personal_info.password, (err, result) => {
-                if (err) {
-                    return res.status(500).json({ error: "Error Occured while login please try again" })
-                }
-    
-                if(!result) {
-                    res.status(403).json({ error: "Incorrect Password" })
-                } else { // correct password
-                    return res.status(200).json(formatLoginDataTojson(user));
-                }
-                
-            });
-
-        } else{
-            res.status(403).json({ error: "Account was created using google. Try logging with google" })
-        }
-        
-    })
-    .catch(err => {
-        console.log(err)
-        res.status(403).json({ error: "Email not found"})
-    })
-
-})
 
 // Routes
-server.use("/api",userRoutes)
+//users
+server.use(userRoutes)
+
 
 
 
